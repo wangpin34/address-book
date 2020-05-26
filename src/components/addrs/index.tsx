@@ -4,6 +4,7 @@ import EditableCell from "components/editable-cell";
 import { Table, Space, Button } from "antd";
 import { Addr, Addrs } from "../../types";
 import { Key } from "antd/lib/table/interface";
+import { useTranslation } from "react-i18next";
 import "./index.sass";
 const { Column, ColumnGroup } = Table;
 
@@ -38,9 +39,10 @@ const AddrsTable = ({
   handleUpdate,
   handleAdd,
 }: Props) => {
+  const { t } = useTranslation();
   // rowSelection object indicates the need for row selection
   const rowSelection = {
-    onChange: (selectedRowKeys: Key[], selectedRows: Addrs) => {
+    onChange: (_: Key[], selectedRows: Addrs) => {
       handleSelect(selectedRows);
     },
     getCheckboxProps: (record: Addr) => ({
@@ -61,22 +63,22 @@ const AddrsTable = ({
       footer={() => (
         <Space size="middle">
           <Button danger onClick={handleDelete}>
-            Delete
+            {t("delete")}
           </Button>
-          <Button onClick={handleUpdate}>Update</Button>
-          <Button onClick={handleAdd}>Add</Button>
+          <Button onClick={handleUpdate}>{t("update")}</Button>
+          <Button onClick={handleAdd}>{t("add")}</Button>
         </Space>
       )}
       bordered
     >
       <Column
-        title="ID"
+        title={t("id")}
         dataIndex="id"
         key="id"
         sorter={(a: Addr, b: Addr) => parseInt(a.id) - parseInt(b.id)}
       />
       <Column
-        title="Name"
+        title={t("name")}
         dataIndex="name"
         key="name"
         render={(_: string, record: Addr, index: number) => (
@@ -90,7 +92,7 @@ const AddrsTable = ({
         sorter={genSorter("name")}
       />
       <Column
-        title="Location"
+        title={t("location")}
         dataIndex="location"
         key="location"
         render={(_: string, record: Addr, index: number) => (
@@ -104,7 +106,7 @@ const AddrsTable = ({
         sorter={genSorter("location")}
       />
       <Column
-        title="Office"
+        title={t("office")}
         dataIndex="office"
         key="office"
         render={(_: string, record: Addr, index: number) => (
@@ -117,9 +119,9 @@ const AddrsTable = ({
         )}
         sorter={genSorter("office")}
       />
-      <ColumnGroup title="Phone">
+      <ColumnGroup title={t("phone")}>
         <Column
-          title="Office"
+          title={t("office")}
           dataIndex="officePhone"
           key="officePhone"
           render={(_: string, record: Addr, index: number) => (
@@ -133,7 +135,7 @@ const AddrsTable = ({
           sorter={genSorter("officePhone")}
         />
         <Column
-          title="Cell"
+          title={t("cell")}
           dataIndex="cellPhone"
           key="cellPhone"
           render={(_: string, record: Addr, index: number) => (
