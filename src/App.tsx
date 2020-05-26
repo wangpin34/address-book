@@ -1,104 +1,138 @@
-import React, { useState, useCallback, useMemo } from 'react'
-import { Addrs, Addr } from './types'
-import MyContext, { defaultValue } from './context'
-import AddrsTable from 'components/addrs'
-import { Button, Space } from 'antd' 
-import './App.sass'
-
-function genID() {
-  return `${Math.random()}`.slice(2)
-}
+import React, { useState, useCallback, useMemo } from "react";
+import { Addrs, Addr, genAddr, Mode } from "./types";
+import MyContext, { defaultValue } from "./context";
+import AddrsTable from "components/addrs";
+import { notification } from "antd";
+import "./App.sass";
 
 function App() {
-  
-  const [addrs, setAddrs] = useState<Addrs>(defaultValue.addrs)
-  const [selected, setSelected] = useState<Addrs>([])
-  const [updating, setUpdating] = useState<Addrs>([])
+  const [addrs, setAddrs] = useState<Addrs>(defaultValue.addrs);
+  const [selected, setSelected] = useState<Addrs>([]);
+  const [updating, setUpdating] = useState<Addrs>([]);
+  const [mode, setMode] = useState<Mode>("view");
 
-  const handleUpdate = useCallback((updated: Addr) => {
-    const index = addrs.findIndex(addr => addr.id === updated.id)
-    if (index > -1) {
-      addrs[index] = updated
-    } else {
-      addrs.push(updated)
-    }
-    setAddrs([...addrs])
-  }, [addrs])
+  const changed = useMemo(() => {
+    return updating.filter((a) => {
+      if (a.newAdding) {
+        return true;
+      }
+      const target = addrs.find((b) => b.id === a.id);
+      if (target) {
+        if (JSON.stringify(a) !== JSON.stringify(target)) {
+          return true;
+        }
+      }
+      return false;
+    });
+  }, [addrs, updating]);
+
+  const handleUpdate = useCallback(
+    (updated: Addr) => {
+      const index = addrs.findIndex((addr) => addr.id === updated.id);
+      if (index > -1) {
+        addrs[index] = { ...updated, newAdding: false };
+      } else {
+        addrs.push({ ...updated, newAdding: false });
+      }
+      setAddrs([...addrs]);
+    },
+    [addrs]
+  );
 
   const handleUpdates = useCallback(() => {
-    updating.forEach(updated => {
-      handleUpdate(updated)
-    })
-    setUpdating([])
-  }, [updating, handleUpdate])
+    setMode("view");
+    if (changed.length) {
+      notification.open({
+        message: "Updating messsage",
+        description: `There are ${
+          changed.length
+        } address(es) will be updated\nThe ID:[${changed
+          .map((c) => c.id)
+          .join(",")}]`,
+      });
+    } else {
+      return;
+    }
+
+    changed.forEach((updated) => {
+      handleUpdate(updated);
+    });
+    setUpdating([]);
+  }, [changed, handleUpdate]);
 
   // Each row sync the modified data to the list for later updating
-  const syncUpdate = useCallback((addr: Addr) => {
-    const index = updating.findIndex(a => addr.id === a.id)
-    if (index > -1) {
-      updating[index] = {...addr}
-    } else {
-      updating.push({...addr})
-    }
-    setUpdating([...updating])
-  }, [updating])
-  
-  const handleDelete = useCallback(() => {
-    const next: Addrs = []
-    addrs.forEach((addr: Addr) => {
-      if (!selected.find(a => a.id === addr.id)) {
-        next.push(addr)
+  const syncUpdate = useCallback(
+    (addr: Addr) => {
+      const index = updating.findIndex((a) => addr.id === a.id);
+      if (index > -1) {
+        updating[index] = { ...addr };
+      } else {
+        updating.push({ ...addr });
       }
-    }
-    )
+      setUpdating([...updating]);
+    },
+    [updating]
+  );
 
-    setAddrs(next)
-    setSelected([])
-  }, [addrs, selected])
+  const handleDelete = useCallback(() => {
+    if (selected.length < 1) {
+      return;
+    }
+    const next: Addrs = [];
+    addrs.forEach((addr: Addr) => {
+      if (!selected.find((a) => a.id === addr.id)) {
+        next.push(addr);
+      }
+    });
+
+    setAddrs(next);
+    setSelected([]);
+  }, [addrs, selected]);
 
   const handleAdd = useCallback(() => {
-    const addrNew = { id: genID(), newAdding: true } as Addr
+    const addrNew = genAddr();
 
-    setUpdating([...updating, addrNew])
-    setAddrs([...addrs, addrNew])
-  }, [updating, addrs])
+    setUpdating([...updating, addrNew]);
+    setAddrs([...addrs, addrNew]);
+    setMode("editing");
+  }, [updating, addrs]);
 
   const handleSelect = useCallback((selecting: Addrs) => {
-    setSelected(selecting)
-  }, [])
+    setSelected(selecting);
+  }, []);
 
   const allAddr = useMemo(() => {
-    const list = [...addrs]
-    updating.forEach(a => {
-      const index = list.findIndex(b => a.id === b.id)
-      list[index] = {...a}
-    })
-    return [...list]
-  }, [addrs, updating])
+    const list = [...addrs];
+    updating.forEach((a) => {
+      const index = list.findIndex((b) => a.id === b.id);
+      list[index] = { ...a };
+    });
+    return [...list];
+  }, [addrs, updating]);
 
   return (
-    <MyContext.Provider value={{ addrs, all: allAddr, selected, handleUpdate, handleDelete, syncUpdate}}>
+    <MyContext.Provider
+      value={{
+        addrs,
+        all: allAddr,
+        selected,
+        handleUpdate,
+        handleDelete,
+        syncUpdate,
+        mode,
+        setMode,
+      }}
+    >
       <div className="App">
-        <header>Address book</header>
+        <main>
+          <AddrsTable
+            handleSelect={handleSelect}
+            handleDelete={handleDelete}
+            handleUpdate={() => handleUpdates()}
+            handleAdd={handleAdd}
+          />
+        </main>
       </div>
-      <main>
-        <AddrsTable handleSelect={handleSelect}/>
-        <Space size="middle">
-          <Button danger onClick={handleDelete}>Delete</Button>
-          <Button onClick={() => handleUpdates()}>Update</Button>
-          <Button onClick={handleAdd}>Add</Button>
-        </Space>
-      </main>
-      <hr/>
-      <h1>all: {allAddr.length} | selected: {selected.length}</h1>
-      <pre>
-        addrs({allAddr.length}):
-        {JSON.stringify(addrs, null, 2)}
-      </pre>
-      <pre>
-        updating({updating.length}):
-        {JSON.stringify(updating, null, 2)}
-      </pre>
     </MyContext.Provider>
   );
 }
