@@ -1,13 +1,15 @@
 import React from "react";
-import { Addrs, Mode } from "./types";
+import { Addr, Addrs, Mode } from "./types";
 
 interface Context {
   addrs: Addrs;
   all?: Addrs;
   selected?: Addrs;
-  handleDelete?: Function;
-  handleUpdate?: Function;
-  syncUpdate?: Function;
+  handleAdd(): void;
+  handleDelete(): void;
+  handleUpdate(): void;
+  handleSelect(p: Addrs): void;
+  syncUpdate: Function;
   mode: Mode;
   setMode(m: Mode): void;
 }
@@ -26,6 +28,11 @@ export const defaultValue: Context = {
     },
   ],
   selected: [],
+  handleAdd: () => null,
+  handleDelete: () => null,
+  handleUpdate: () => null,
+  handleSelect: (addrs: Addrs) => null,
+  syncUpdate: (addr: Addr) => null,
   mode: "view",
   setMode: (m: Mode) => null,
 };

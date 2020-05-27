@@ -116,8 +116,10 @@ function App() {
         addrs,
         all: allAddr,
         selected,
-        handleUpdate,
+        handleAdd,
+        handleUpdate: () => handleUpdates(),
         handleDelete,
+        handleSelect,
         syncUpdate,
         mode,
         setMode,
@@ -125,12 +127,7 @@ function App() {
     >
       <div className="App">
         <main>
-          <AddrsTable
-            handleSelect={handleSelect}
-            handleDelete={handleDelete}
-            handleUpdate={() => handleUpdates()}
-            handleAdd={handleAdd}
-          />
+          <AddrsTable />
         </main>
       </div>
     </MyContext.Provider>

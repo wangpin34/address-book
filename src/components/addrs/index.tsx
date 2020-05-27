@@ -8,13 +8,6 @@ import { useTranslation } from "react-i18next";
 import "./index.sass";
 const { Column, ColumnGroup } = Table;
 
-interface Props {
-  handleSelect(p: Addrs): void;
-  handleDelete(): void;
-  handleUpdate(): void;
-  handleAdd(): void;
-}
-
 function genSorter(name: keyof Addr) {
   return (a: Addr, b: Addr) => {
     const aVal = a[name];
@@ -33,13 +26,9 @@ function genSorter(name: keyof Addr) {
   };
 }
 
-const AddrsTable = ({
-  handleSelect,
-  handleDelete,
-  handleUpdate,
-  handleAdd,
-}: Props) => {
+const AddrsTable = () => {
   const { t } = useTranslation();
+  const { handleSelect, handleDelete, handleAdd, handleUpdate } = useContext(MyContext)
   // rowSelection object indicates the need for row selection
   const rowSelection = {
     onChange: (_: Key[], selectedRows: Addrs) => {
