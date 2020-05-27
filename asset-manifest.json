@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "http://blog.wangpin.xyz/address-book/static/css/main.24dd0505.chunk.css",
-    "main.js": "http://blog.wangpin.xyz/address-book/static/js/main.0a7516dd.chunk.js",
-    "main.js.map": "http://blog.wangpin.xyz/address-book/static/js/main.0a7516dd.chunk.js.map",
-    "runtime-main.js": "http://blog.wangpin.xyz/address-book/static/js/runtime-main.c7b03a36.js",
-    "runtime-main.js.map": "http://blog.wangpin.xyz/address-book/static/js/runtime-main.c7b03a36.js.map",
-    "static/css/2.63b65d4e.chunk.css": "http://blog.wangpin.xyz/address-book/static/css/2.63b65d4e.chunk.css",
-    "static/js/2.c6680f32.chunk.js": "http://blog.wangpin.xyz/address-book/static/js/2.c6680f32.chunk.js",
-    "static/js/2.c6680f32.chunk.js.map": "http://blog.wangpin.xyz/address-book/static/js/2.c6680f32.chunk.js.map",
-    "index.html": "http://blog.wangpin.xyz/address-book/index.html",
-    "precache-manifest.29345dc56195c4a6eb875d43a4ac0737.js": "http://blog.wangpin.xyz/address-book/precache-manifest.29345dc56195c4a6eb875d43a4ac0737.js",
-    "service-worker.js": "http://blog.wangpin.xyz/address-book/service-worker.js",
-    "static/css/2.63b65d4e.chunk.css.map": "http://blog.wangpin.xyz/address-book/static/css/2.63b65d4e.chunk.css.map",
-    "static/css/main.24dd0505.chunk.css.map": "http://blog.wangpin.xyz/address-book/static/css/main.24dd0505.chunk.css.map",
-    "static/js/2.c6680f32.chunk.js.LICENSE.txt": "http://blog.wangpin.xyz/address-book/static/js/2.c6680f32.chunk.js.LICENSE.txt"
+    "main.css": "https://blog.wangpin.xyz/address-book/static/css/main.24dd0505.chunk.css",
+    "main.js": "https://blog.wangpin.xyz/address-book/static/js/main.4075f535.chunk.js",
+    "main.js.map": "https://blog.wangpin.xyz/address-book/static/js/main.4075f535.chunk.js.map",
+    "runtime-main.js": "https://blog.wangpin.xyz/address-book/static/js/runtime-main.d12c54b6.js",
+    "runtime-main.js.map": "https://blog.wangpin.xyz/address-book/static/js/runtime-main.d12c54b6.js.map",
+    "static/css/2.63b65d4e.chunk.css": "https://blog.wangpin.xyz/address-book/static/css/2.63b65d4e.chunk.css",
+    "static/js/2.c6680f32.chunk.js": "https://blog.wangpin.xyz/address-book/static/js/2.c6680f32.chunk.js",
+    "static/js/2.c6680f32.chunk.js.map": "https://blog.wangpin.xyz/address-book/static/js/2.c6680f32.chunk.js.map",
+    "index.html": "https://blog.wangpin.xyz/address-book/index.html",
+    "precache-manifest.4fc844401b2689c3704c084950029f9c.js": "https://blog.wangpin.xyz/address-book/precache-manifest.4fc844401b2689c3704c084950029f9c.js",
+    "service-worker.js": "https://blog.wangpin.xyz/address-book/service-worker.js",
+    "static/css/2.63b65d4e.chunk.css.map": "https://blog.wangpin.xyz/address-book/static/css/2.63b65d4e.chunk.css.map",
+    "static/css/main.24dd0505.chunk.css.map": "https://blog.wangpin.xyz/address-book/static/css/main.24dd0505.chunk.css.map",
+    "static/js/2.c6680f32.chunk.js.LICENSE.txt": "https://blog.wangpin.xyz/address-book/static/js/2.c6680f32.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.c7b03a36.js",
+    "static/js/runtime-main.d12c54b6.js",
     "static/css/2.63b65d4e.chunk.css",
     "static/js/2.c6680f32.chunk.js",
     "static/css/main.24dd0505.chunk.css",
-    "static/js/main.0a7516dd.chunk.js"
+    "static/js/main.4075f535.chunk.js"
   ]
 }
