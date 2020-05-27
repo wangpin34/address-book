@@ -21,4 +21,7 @@ export function genAddr(): Addr {
 export type Addrs = Addr[];
 
 // table mode
-export type Mode = "view" | "editing";
+export enum Mode {
+  View,
+  Editing
+}

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Input } from "antd";
-import { Addr } from "../../types";
+import { Addr, Mode } from "../../types";
 import MyContext from "../../context";
 
 interface PropsOfCell {
@@ -20,7 +20,7 @@ const EditableCell = ({
   const syncUpdate = contextValue.syncUpdate;
   const [editing, setEditing] = useState<boolean>(Boolean(defaultEditing));
 
-  if (allowEdit && editing && contextValue.mode === "editing") {
+  if (allowEdit && editing && contextValue.mode === Mode.Editing) {
     return (
       <Input
         value={addr[name] as string}
@@ -37,7 +37,7 @@ const EditableCell = ({
         onDoubleClick={() => {
           if (allowEdit) {
             setEditing(true);
-            contextValue.setMode("editing");
+            contextValue.setMode(Mode.Editing);
           }
         }}
       >

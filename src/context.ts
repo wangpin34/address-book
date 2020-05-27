@@ -31,9 +31,9 @@ export const defaultValue: Context = {
   handleAdd: () => null,
   handleDelete: () => null,
   handleUpdate: () => null,
-  handleSelect: (addrs: Addrs) => null,
-  syncUpdate: (addr: Addr) => null,
-  mode: "view",
+  handleSelect: (_: Addrs) => null,
+  syncUpdate: (_: Addr) => null,
+  mode: Mode.View,
   setMode: (m: Mode) => null,
 };
 

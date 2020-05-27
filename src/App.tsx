@@ -9,7 +9,7 @@ function App() {
   const [addrs, setAddrs] = useState<Addrs>(defaultValue.addrs);
   const [selected, setSelected] = useState<Addrs>([]);
   const [updating, setUpdating] = useState<Addrs>([]);
-  const [mode, setMode] = useState<Mode>("view");
+  const [mode, setMode] = useState<Mode>(Mode.View);
 
   const changed = useMemo(() => {
     return updating.filter((a) => {
@@ -40,7 +40,7 @@ function App() {
   );
 
   const handleUpdates = useCallback(() => {
-    setMode("view");
+    setMode(Mode.View);
     if (changed.length) {
       notification.open({
         message: "Updating messsage",
@@ -79,22 +79,36 @@ function App() {
       return;
     }
     const next: Addrs = [];
-    addrs.forEach((addr: Addr) => {
+    addrs.forEach(addr => {
       if (!selected.find((a) => a.id === addr.id)) {
-        next.push(addr);
+        next.push(addr)
       }
     });
 
     setAddrs(next);
+
+    if (updating.length > 0) {
+      const nextUpdating: Addrs = []
+
+      updating.forEach(addr => {
+        if (!selected.find((a) => a.id === addr.id)) {
+          nextUpdating.push(addr)
+        }
+      })
+      if (updating.length > nextUpdating.length) {
+        setUpdating(nextUpdating)
+      }
+    }
+
     setSelected([]);
-  }, [addrs, selected]);
+  }, [addrs, updating, selected]);
 
   const handleAdd = useCallback(() => {
     const addrNew = genAddr();
 
     setUpdating([...updating, addrNew]);
     setAddrs([...addrs, addrNew]);
-    setMode("editing");
+    setMode(Mode.Editing);
   }, [updating, addrs]);
 
   const handleSelect = useCallback((selecting: Addrs) => {
